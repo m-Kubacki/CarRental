@@ -8,5 +8,5 @@ def index(request):
 def index(request):
     return render(request, 'cars.html.jinja')
 
-def index(request, car_id):
+def index(request):
     return render(request, 'car.html.jinja' )
