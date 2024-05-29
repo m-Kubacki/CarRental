@@ -1,10 +1,13 @@
 from django.db import models
-from django.forms import ModelForm
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
 class Equipment(models.Model):
     equipment = models.CharField(max_length=50)
+
+    def __str__(self) -> str:
+        return self.equipment
+
 
 class Car(models.Model):
     ENGINE_TYPES = [
@@ -19,9 +22,18 @@ class Car(models.Model):
         ("manualna", "Manualna"),
         ("polautomatyczna", "Polautomatyczna"),
     ]
-    brand = models.TextField(max_length=50)
-    model = models.TextField(max_length=50)
-    fuel_type = models.CharField(max_length=20, choices=ENGINE_TYPES)
+    CATEGORIES = [
+        ("suv", "SUV")
+        ("miejski", "miejski")
+        ("terenowy", "terenowy")
+        ("van", "VAN")
+        ("sportowy", "sportowy")
+    ]
+
+
+    brand = models.TextField(max_length=50, verbose_name='Marka')
+    model = models.TextField(max_length=50, verbose_name='Typ silnika')
+    fuel_type = models.CharField(max_length=20, choices=ENGINE_TYPES, verbose_name='Typ paliwa')
     seats_count = models.PositiveSmallIntegerField()
     doors_count = models.PositiveSmallIntegerField()
     fuel_usage = models.FloatField()
@@ -32,8 +44,10 @@ class Car(models.Model):
     available = models.BooleanField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     value = models.DecimalField(max_digits=10, decimal_places=2)
+    category = models.CharField(max_length=20, choices=CATEGORIES)
 
 class Address(models.Model):
+    user = models.OneToOneField(User, on_delete=models.RESTRICT)
     country =models.CharField(max_length=30)
     city = models.CharField(max_length=30)
     post_code = models.CharField(max_length=10)
@@ -69,14 +83,3 @@ class Order(models.Model):
     payment_method = models.CharField(max_length=20, choices=PAYMENT_METHODS)
     payment_status = models.BooleanField()
 
-class RegistrationForm(ModelForm):
-   class Meta:
-       model = User
-       exlude = ['id']
-    #    fields = ['first_name', 'last_name', 'email', 'phone' , "address"]
-
-class AddressForm(ModelForm):
-    class Meta:
-        model =  Address
-        exlude = ['id']
-        # fields = ['country', 'city', 'post_code', 'street', 'building_no', 'appartment_no']

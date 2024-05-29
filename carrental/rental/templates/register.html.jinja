@@ -1,4 +1,15 @@
 {% extends "base.html.jinja"%}
 {% block  content%}
-{{form}}
+    {% if message %}
+        <p> {{message}} </p>
+        <p>Jakis tekst </p>
+    {% else %}
+    <form action="{% url 'register' %}" method="POST" novalidate >
+        {% csrf_token %}
+        {{form.as_p}}
+        {{form_address.as_p}}
+        <button type='submit'>Zarejestruj</button>
+     </form>
+
+     {% endif %}
 {% endblock  content%}
