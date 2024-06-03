@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import Car
-from .models import Equipment
+from .models import Car, Equipment
+
 # Register your models here.
 admin.site.register(Car, list_display = (
     'id',
