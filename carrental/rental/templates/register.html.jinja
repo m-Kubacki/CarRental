@@ -1,15 +1,13 @@
-{% extends "base.html.jinja"%}
-{% block  content%}
-    {% if message %}
-        <p> {{message}} </p>
-        <p>Jakis tekst </p>
+{% extends "base.html.jinja" %}
+{% block content %}
+    {% if message  %}
+        <p>{{message}}</p>
     {% else %}
-    <form action="{% url 'register' %}" method="POST" novalidate >
+    <form action="{% url 'register' %}" method="POST">
         {% csrf_token %}
-        {{form.as_p}}
+        {{form_user.as_p}}
         {{form_address.as_p}}
-        <button type='submit'>Zarejestruj</button>
-     </form>
-
-     {% endif %}
-{% endblock  content%}
+        <button type="submit">Zarejestruj</button>
+    </form>
+    {% endif %}
+{% endblock content %}

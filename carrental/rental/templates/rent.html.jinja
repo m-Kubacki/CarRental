@@ -1,0 +1,13 @@
+{%extends 'base.html.jinja'%}
+{%block content%}
+    <p>Wypozyczenie</p>
+       {% if message  %}
+        <p>{{message}}</p>
+    {% else %}
+    <form action="{% url 'rent' car_id=car_id %}" method="POST">
+        {% csrf_token %}
+        {{form_order.as_p}}
+        <button type="submit">Wypozycz</button>
+    </form>
+    {% endif %}
+{%endblock%}
